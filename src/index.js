@@ -95,7 +95,7 @@ class Application {
     }
 
     dynamodb.put({
-      TableName: 'application',
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION,
       Item: insertItem
     }, (error, result) => {
       if (error) {
@@ -128,7 +128,7 @@ class Application {
       Key: {
         key: key
       },
-      TableName: 'application'
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION
     }, (error, result) => {
       if (error) {
         return callback(error)
@@ -157,7 +157,7 @@ class Application {
     })
 
     dynamodb.scan({
-      TableName: 'application',
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION,
       ExpressionAttributeNames: {
         '#K': 'key'
       },
@@ -197,7 +197,7 @@ class Application {
       Key: {
         key: key
       },
-      TableName: 'application'
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION
     }, (error, result) => {
       if (error) {
         return callback(error)
@@ -232,7 +232,7 @@ class Application {
     })
 
     dynamodb.scan({
-      TableName: 'application',
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION,
       ExpressionAttributeNames: {
         '#ID': 'applicationId',
         '#A': 'accountId',
@@ -282,7 +282,7 @@ class Application {
     })
 
     dynamodb.scan({
-      TableName: 'application',
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION,
       ExpressionAttributeNames: {
         '#N': 'name',
         '#V': 'version',
@@ -339,7 +339,7 @@ class Application {
     })
 
     dynamodb.scan({
-      TableName: 'application',
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION,
       ExpressionAttributeNames: {
         '#N': 'name',
         '#V': 'version',
@@ -400,7 +400,7 @@ class Application {
     }
 
     dynamodb.put({
-      TableName: 'application',
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION,
       Item: insertItem
     }, (error, result) => {
       if (error) {
@@ -440,7 +440,7 @@ class Application {
         key: self.key
       },
       ReturnValues: 'UPDATED_NEW',
-      TableName: 'application',
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION,
       UpdateExpression: 'SET #N = :n'
     }
 

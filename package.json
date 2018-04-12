@@ -1,6 +1,6 @@
 {
   "name": "bugfixes-application-models",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "description": "BugFixes ApplicationModel",
   "main": "index.js",
   "author": "keloran <keloran@bugfix.es>",

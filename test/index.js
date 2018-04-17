@@ -192,4 +192,21 @@ describe('Application Model', () => {
       done()
     })
   })
+
+  it('should verify app against key', (done) => {
+    let app = new Application()
+    app.applicationId = appDetails.applicationId
+    app.key = appDetails.key
+    app.verify((error, result) => {
+      if (error) {
+        done(Error(error))
+      }
+
+      expect(result).to.be.an('object')
+      expect(result).to.have.property('success')
+      expect(result.success).to.be.equal(true)
+
+      done()
+    })
+  })
 })

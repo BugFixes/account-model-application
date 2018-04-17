@@ -456,6 +456,45 @@ class Application {
       })
     })
   }
+
+  verify (callback) {
+    let self = this
+
+    AWS.config.update({
+      region: process.env.AWS_DYNAMO_REGION
+    })
+    const dynamodb = new AWS.DynamoDB.DocumentClient({
+      apiVersion: process.env.AWS_DYNAMO_VERSION,
+      endpoint: new AWS.Endpoint(process.env.AWS_DYNAMO_ENDPOINT)
+    })
+
+    dynamodb.get({
+      Key: {
+        key: self.key
+      },
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION
+    }, (error, result) => {
+      if (error) {
+        return callback(error)
+      }
+
+      if (result.Item) {
+        if (result.Item.applicationId === self.applicationId) {
+          return callback(null, {
+            success: true
+          })
+        }
+
+        return callback(null, {
+          success: false
+        })
+      }
+
+      return callback(null, {
+        success: false
+      })
+    })
+  }
 }
 
 Application.prototype.removeAll = dataLayer.removeAll

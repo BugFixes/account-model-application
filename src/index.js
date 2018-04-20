@@ -84,12 +84,13 @@ class Application {
     let name = this.name
     let key = this.key
     let secret = this.secret
+    let version = this.version
 
     const insertItem = {
       applicationId: appId,
       accountId: this.accountId,
       name: name,
-      version: this.version,
+      version: version,
       key: key,
       secret: secret
     }
@@ -108,7 +109,8 @@ class Application {
         applicationId: appId,
         name: name,
         key: key,
-        secret: secret
+        secret: secret,
+        version: version
       })
     })
   }
@@ -493,6 +495,37 @@ class Application {
       return callback(null, {
         success: false
       })
+    })
+  }
+
+  getVersion(callback) {
+    let self = this
+
+    AWS.config.update({
+      region: process.env.AWS_DYNAMO_REGION
+    })
+    const dynamodb = new AWS.DynamoDB.DocumentClient({
+      apiVersion: process.env.AWS_DYNAMO_VERSION,
+      endpoint: process.env.AWS_DYNAMO_ENDPOINT
+    })
+
+    dynamodb.get({
+      Key: {
+        key: self.key
+      },
+      TableName: process.env.AWS_DYNAMO_TABLE_APPLICATION
+    }, (error, result) => {
+      if (error) {
+        return callback(error)
+      }
+
+      if (result.Item.accountId === self.accountId) {
+        return callback(null, {
+          version: result.Item.version
+        })
+      }
+
+      return callback('Not Valid Key with Account')
     })
   }
 }

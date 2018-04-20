@@ -209,4 +209,21 @@ describe('Application Model', () => {
       done()
     })
   })
+
+  it('should get version from ids', (done) => {
+    let app = new Application()
+    app.key = appDetails.key
+    app.accountId = appPayload.accountId
+    app.getVersion((error, result) => {
+      if (error) {
+        done(Error(error))
+      }
+
+      expect(result).to.be.an('object')
+      expect(result).to.have.property('version')
+      expect(result.version).to.be.equal(appDetails.version)
+
+      done()
+    })
+  })
 })
